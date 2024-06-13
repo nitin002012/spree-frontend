@@ -1,40 +1,45 @@
 'use client'
-
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import ProductCard from "./productCard";
 
-const ProductPage = ()=>{
-    const [products,setProducts]=useState([]);
-    useState(()=>{
-        const fetchData = async ()=>{
-            const response = await axios.get("http://localhost:3000/api/v1/products")
-            const data = response.data
-            console.log(data);
-            setProducts(data)
-        }
-        fetchData();
-    },[])
-    console.log("products are ",products);
+const ProductPage = () => {
+  const [products, setProducts] = useState([]);
+  const [addToCart, setAddToCart] = useState([]);
 
-    return (
-        <>
-        <h1 className="pl-4 my-5 text-3xl font-semibold text-red-500 ">Products</h1>
-        <div className="flex m-12 justify-centre items-center gap-5">
-        {products.map((item)=>(
-            <div class="max-w-md mx-auto bg-white rounded-xl overflow-hidden m-4 w-[30%] wrap">
-            <img class="object-cover w-full h-48" src="https://via.placeholder.com/300" alt="Product Image"/>
-            <div class="p-6">
-              <h1 class="text-xl font-bold text-gray-800">{item.name}</h1>
-              <p class="mt-2 text-gray-600">{item.description}</p>
-              <div class="mt-4 flex items-center justify-between">
-                <span class="text-gray-700 font-bold">$99.99</span>
-                <button class="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Add to Cart</button>
-              </div>
-            </div>
-          </div>
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/v1/products");
+        const data = response.data;
+        console.log(data);
+        setProducts(data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  console.log("products are ", products);
+
+  const handleClick = (item) => {
+    setAddToCart([...addToCart, item]); 
+    alert(`Added to cart successfully`);
+  };
+
+  console.log(addToCart);
+
+  return (
+    <>
+<h1 className="text-4xl p-5 font-mono text-center underline ">Products</h1>
+      <div className="flex flex-wrap justify-center items-center gap-5">
+        {products.map((item) => (
+          <ProductCard key={item.id} product={item} handleClick={handleClick} />
         ))}
-        </div>
-        </>
-    )
-}
-export default ProductPage  ;
+      </div>
+    </>
+  );
+};
+
+export default ProductPage;
