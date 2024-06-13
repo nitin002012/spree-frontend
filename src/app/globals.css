@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Clear hover effects for all elements */
+.hover\:none:hover {
+  color: inherit;
+  background-color: transparent;
+  border-color: transparent;
+  /* Add any other properties you want to clear on hover */
+}
+
 :root {
   background-color: hsl(0, 100%, 100%);
   --foreground-rgb: 0, 0, 0;
