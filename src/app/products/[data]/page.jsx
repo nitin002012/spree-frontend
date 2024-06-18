@@ -30,7 +30,10 @@ const ProductItem = ({ params }) => {
         <>
             <h1 className="p-2">This is a product page of category of {params.data}</h1>
             {products.filter((item) => item.meta_keywords === params.data).map((item) => (
+                <div className="flex">
                 <ProductCard key={item.id} handleClick={handleClick} product={item} />
+
+                </div>
             ))}
         </>
     );
