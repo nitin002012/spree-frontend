@@ -62,8 +62,8 @@ const ProductPage = () => {
           <p className="text-3xl font-bold w-8/12 mx-auto">{keyword.toLocaleUpperCase()}</p>
           <div className="flex flex-wrap justify-center items-center gap-5 my-7">
             {products.map(item => (
-              <div className=" ">
-                <ProductCard key={item.id} handleClick={handleClick} product={item} />
+              <div className=" my-5 ">
+                <ProductCard key={item.id} handleClick={handleClick} product={item} price1={item.price} />
 
                 <hr/>
               </div>
